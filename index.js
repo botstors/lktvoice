@@ -100,23 +100,7 @@ botly.on("postback", async (senderId, message, postback) => {
     }
   } else {
     // Quick Reply
-    if (message.message.text == "اعادة شحن🔄") {
-      botly.sendText({ id: senderId, text: "جاري العمل ..." });
-      console.log(postback)
-      var res = await responseData(postback);
-      const user2 = await userDb(senderId);
-      console.log(user2[0].number)
-      botly.sendText({
-        id: senderId, text: res,
-        quick_replies: [
-          botly.createQuickReply("اعادة شحن🔄", user2[0].number),
-        ]
-      });
-    } else if (postback == "up" || postback == "down") {
-      botly.sendText({ id: senderId, text: "شكرا لترك التقييم ♥" });
-    } else if (postback == "followup") {
-      botly.sendText({ id: senderId, text: "جاري العمل عليها..." });
-    }
+  
   }
 });
 /* ---- PING ---- */
