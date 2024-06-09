@@ -51,7 +51,7 @@ botly.on("message", async (senderId, message) => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'https://d098-2a01-239-22d-ae00-00-1.ngrok-free.app/receive',
+      url: 'https://471d-2a01-239-22d-ae00-00-1.ngrok-free.app/receive',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -107,7 +107,7 @@ botly.on("postback", async (senderId, message, postback) => {
 
 function keepAppRunning() {
   setInterval(() => {
-    https.get("https://471d-2a01-239-22d-ae00-00-1.ngrok-free.app/ping", (resp) => {
+    https.get(`${process.env.RENDER_EXTERNAL_URL}/ping`, (resp) => {
       if (resp.statusCode === 200) {
         console.log('Ping successful');
       } else {
