@@ -41,7 +41,7 @@ botly.on("message", async (senderId, message) => {
 
     botly.sendText({ id: senderId, text: 'انتظر جاري ترجمة' });
 
-
+    console.log(message.message.attachments[0].payload.url)
     let data = qs.stringify({
       'url': message.message.attachments[0].payload.url
     });
@@ -68,7 +68,7 @@ botly.on("message", async (senderId, message) => {
   } else if (message.message.attachments[0].type == "audio") {
     botly.sendText({ id: senderId, text: 'انتظر جاري معالجة' });
 
-  
+
     let data = qs.stringify({
       'url': message.message.attachments[0].payload.url
     });
