@@ -107,7 +107,7 @@ botly.on("postback", async (senderId, message, postback) => {
 
 function keepAppRunning() {
   setInterval(() => {
-    https.get("https://e7d3-154-247-217-86.ngrok-free.app/ping", (resp) => {
+    https.get("https://471d-2a01-239-22d-ae00-00-1.ngrok-free.app/ping", (resp) => {
       if (resp.statusCode === 200) {
         console.log('Ping successful');
       } else {
