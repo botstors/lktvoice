@@ -43,13 +43,13 @@ botly.on("message", async (senderId, message) => {
 
     console.log(message.message.attachments[0].payload.url)
     let data = qs.stringify({
-      'url': message.message.attachments[0].payload.url
+      'urlImage': message.message.attachments[0].payload.url
     });
 
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      urlImage: 'https://471d-2a01-239-22d-ae00-00-1.ngrok-free.app/receive',
+      url: 'https://471d-2a01-239-22d-ae00-00-1.ngrok-free.app/receive',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
