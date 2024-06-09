@@ -3,6 +3,7 @@ const app = express();
 const Botly = require("botly");
 const https = require("https");
 const axios = require('axios');
+const qs = require('qs');
 const botly = new Botly({
   accessToken: process.env.token,
   verifyToken: process.env.vtoken,
@@ -16,7 +17,7 @@ app.use(express.json({ verify: botly.getVerifySignature(process.env.APP_SECRET) 
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/webhook", botly.router());
-msgDev = `مرحبا بك في بوت LktText \n الذي يقوم بتحويل  المقطع الصوتي الى نص\n قم باعادة توجيه رسالة صوتية من اي محادثة الى البوت وسيتم تحويل \n اذا واجهت اي مشكلة اتصل بالمطور \n حساب المطور 👇`
+msgDev = `مرحبا بك في بوت LktText \n الذي يقوم بتحويل  المقطع الصوتي الى نص\n قم باعادة توجيه صوت من اي محادثة الى البوت وسيتم تحويل \n اذا واجهت اي مشكلة اتصل بالمطور \n حساب المطور 👇`
 botly.on("message", async (senderId, message) => {
   console.log(senderId)
 
@@ -38,12 +39,36 @@ botly.on("message", async (senderId, message) => {
   } else if (message.message.attachments[0].type == "image") {
     console.log(message.message.attachments[0])
 
-    botly.sendText({ id: senderId, text: "صورة" });
+    botly.sendText({ id: senderId, text: 'انتظر جاري ترجمة' });
+
+
+    let data = qs.stringify({
+      'url': message.message.attachments[0].payload.url
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      urlImage: 'https://471d-2a01-239-22d-ae00-00-1.ngrok-free.app/receive',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        botly.sendText({ id: senderId, text: `محتوى رسالة صوتية :${JSON.stringify(response.data)}` });
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
   } else if (message.message.attachments[0].type == "audio") {
     botly.sendText({ id: senderId, text: 'انتظر جاري معالجة' });
 
-    const axios = require('axios');
-    const qs = require('qs');
+  
     let data = qs.stringify({
       'url': message.message.attachments[0].payload.url
     });
@@ -100,7 +125,7 @@ botly.on("postback", async (senderId, message, postback) => {
     }
   } else {
     // Quick Reply
-  
+
   }
 });
 /* ---- PING ---- */
