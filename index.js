@@ -58,7 +58,7 @@ botly.on("message", async (senderId, message) => {
 
     axios.request(config)
       .then((response) => {
-        botly.sendText({ id: senderId, text: `محتوى رسالة صوتية :${JSON.stringify(response.data)}` });
+        botly.sendText({ id: senderId, text: `${JSON.stringify(response.data)}` });
         console.log(JSON.stringify(response.data));
       })
       .catch((error) => {
