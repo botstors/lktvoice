@@ -26,7 +26,7 @@ botly.on("message", async (senderId, message) => {
 
 
     if (message.message.text.startsWith("wiki:")) {
-      var msg = message.message.text.replace(":", "")
+      var msg = message.message.text.replace("wiki:", "")
         (async () => {
           try {
 
