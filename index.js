@@ -36,6 +36,7 @@ botly.on("message", async (senderId, message) => {
         if (error.type === 'disambiguation') {
           console.log(`هناك عدة مقالات تحمل هذا الاسم '${searchTerm}': ${error.title}`);
         } else if (error.type === 'not_found') {
+              botly.sendText({ id: senderId, text:"لا توجد مقالة باسم"});
           console.log(`لا توجد مقالة باسم '${searchTerm}'`);
         } else {
           console.log(`حدث خطأ غير متوقع: ${error.message}`);
