@@ -42,7 +42,7 @@ botly.on("message", async (senderId, message) => {
           },
         });
 
-        const lines = response.data.split('\n');
+        const lines = response.data;
         let concatenatedContent = '';
 
         lines.forEach(line => {
