@@ -29,14 +29,10 @@ botly.on("message", async (senderId, message) => {
       var msg = message.message.text.replace("wiki:", "")
         (async () => {
           try {
-
             wikipedia.setLang('ar');
-
             const searchTerm = msg;
-
             const summary = await wikipedia.summary(searchTerm);
             botly.sendText({ id: senderId, text: summary.extract });
-          
           } catch (error) {
             if (error.type === 'disambiguation') {
               console.log(`هناك عدة مقالات تحمل هذا الاسم '${searchTerm}': ${error.title}`);
