@@ -22,50 +22,15 @@ botly.on("message", async (senderId, message) => {
   console.log(senderId)
 
   if (message.message.text) {
+    botly.sendButtons({
+      id: senderId,
+      text: msgDev,
+      buttons: [
+        botly.createWebURLButton("حساب المطور 💻👤", "https://www.facebook.com/salah.louktaila"),
 
+      ]
+    });
 
-    const msg = message.message.text;
-
-    const run = async () => {
-      const data = {
-        user_id: 0,
-        token: 0,
-        msg: [{ content: msg, role: 'user' }],
-        model: 'gpt-3.5-turbo',
-      };
-
-      try {
-        const response = await axios.post(`https://www.yuxin-ai.com/fastapi/api/chat`, data, {
-          headers: {
-            'accept-language': 'en,ar-DZ;q=0.9,ar;q=0.8',
-            'content-type': 'application/json',
-          },
-        });
-
-        const lines = response.data;
-        let concatenatedContent = '';
-
-        lines.forEach(line => {
-          const match = line.match(/"content": "([^"]*)"/);
-          if (match && match[1]) {
-            const content = match[1];
-            const decodedContent = content.replace(/\\u[\dA-F]{4}/gi, match =>
-              String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16))
-            );
-            const processedContent = decodedContent.replace(/\\n/g, '\n');
-            concatenatedContent += processedContent;
-          }
-        });
-
-        botly.sendText({ id: senderId, text: concatenatedContent });
-
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        botly.sendText({ id: senderId, text: 'Sorry, something went wrong. Please try again later.' });
-      }
-    };
-
-    run();
 
 
 
@@ -140,12 +105,7 @@ botly.on("postback", async (senderId, message, postback) => {
     if (postback == "") {
       //
     } else if (postback == "") {
-      botly.sendButtons({
-    
-        
-      });
-
-
+      //
     } else if (postback == "") {
       //
     } else if (postback == "") {
@@ -165,7 +125,6 @@ botly.on("postback", async (senderId, message, postback) => {
     }
   } else {
     // Quick Reply
-
 
   }
 });
