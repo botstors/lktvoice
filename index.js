@@ -4,6 +4,7 @@ const Botly = require("botly");
 const https = require("https");
 const axios = require('axios');
 const qs = require('qs');
+const wikipedia = require('wikipedia');
 const botly = new Botly({
   accessToken: process.env.token,
   verifyToken: process.env.vtoken,
@@ -22,17 +23,43 @@ botly.on("message", async (senderId, message) => {
   console.log(senderId)
 
   if (message.message.text) {
-    botly.sendButtons({
-      id: senderId,
-      text: msgDev,
-      buttons: [
-        botly.createWebURLButton("حساب المطور 💻👤", "https://www.facebook.com/salah.louktaila"),
-
-      ]
-    });
 
 
+    if (message.message.text.startsWith("wiki:")) {
+      var msg = message.message.text.replace(":", "")
+        (async () => {
+          try {
 
+            wikipedia.setLang('ar');
+
+            const searchTerm = msg;
+
+            const summary = await wikipedia.summary(searchTerm);
+            botly.sendText({ id: senderId, text: summary.extract });
+          
+          } catch (error) {
+            if (error.type === 'disambiguation') {
+              console.log(`هناك عدة مقالات تحمل هذا الاسم '${searchTerm}': ${error.title}`);
+            } else if (error.type === 'not_found') {
+              console.log(`لا توجد مقالة باسم '${searchTerm}'`);
+            } else {
+              console.log(`حدث خطأ غير متوقع: ${error.message}`);
+            }
+          }
+        })();
+
+    } else {
+      botly.sendButtons({
+        id: senderId,
+        text: msgDev,
+        buttons: [
+          botly.createWebURLButton("حساب المطور 💻👤", "https://www.facebook.com/salah.louktaila"),
+
+        ]
+      });
+
+    }
+   
 
   } else if (message.message.attachments[0].payload.sticker_id) {
     botly.sendText({ id: senderId, text: "جام" });
@@ -92,7 +119,7 @@ botly.on("message", async (senderId, message) => {
         console.log(error);
       });
 
-
+   
 
   } else if (message.message.attachments[0].type == "video") {
     console.log(message.message.attachments[0])
