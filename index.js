@@ -39,6 +39,7 @@ botly.on("message", async (senderId, message) => {
               botly.sendText({ id: senderId, text:"لا توجد مقالة باسم"});
           console.log(`لا توجد مقالة باسم '${searchTerm}'`);
         } else {
+           botly.sendText({ id: senderId, text:"لا توجد مقالة باسم"});
           console.log(`حدث خطأ غير متوقع: ${error.message}`);
         }
       }
