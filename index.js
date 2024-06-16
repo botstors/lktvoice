@@ -21,7 +21,7 @@ app.use("/webhook", botly.router());
 msgDev = `مرحبا بك في بوت LktText \n الذي يقوم بتحويل  المقطع الصوتي الى نص\n قم باعادة توجيه صوت من اي محادثة الى البوت وسيتم تحويل \n اذا واجهت اي مشكلة اتصل بالمطور \n حساب المطور 👇`
 botly.on("message", async (senderId, message) => {
   console.log(senderId)
-
+let textmsg
   if (message.message.text) {
 
 
@@ -44,7 +44,7 @@ botly.on("message", async (senderId, message) => {
     }
 
     else if (message.message.text.startsWith("صوت:")) {
-     
+      textmsg = message.message.text
       alloy = "alloy"
       echo = "echo"
       fable = "fable"
@@ -168,32 +168,31 @@ botly.on("postback", async (senderId, message, postback) => {
     if (message.message.text =="نور") {
       botly.sendText({ id: senderId, text: "انتظر نور تقوم بارسل صوت" });
       console.log(postback);
-      var msg = message.message.text.replace("صوت:", "")
+  
 
 
-      TextToVoice(msg, postback)
+      TextToVoice(textmsg, postback)
         .then(url => {
-          console.log(url)
-          // if (url) {
-          //   console.log(url)
-          //   botly.sendAttachment({
-          //     id: senderId, 
-          //     type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,  
-          //     payload: {
-          //       url: url 
-          //     }
-          //   }, (err, data) => {
-          //     if (err) {
-          //       console.error('Error sending attachment:', err);
-          //     } else {
-          //       console.log('Attachment sent successfully:', data);
-          //       // Optionally handle the response data or log it
-          //     }
-          //   });
+          if (url) {
+            console.log(url)
+            botly.sendAttachment({
+              id: senderId, 
+              type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,  
+              payload: {
+                url: url 
+              }
+            }, (err, data) => {
+              if (err) {
+                console.error('Error sending attachment:', err);
+              } else {
+                console.log('Attachment sent successfully:', data);
+                // Optionally handle the response data or log it
+              }
+            });
 
-          // } else {
-          //   console.log("Failed to generate URL");
-          // }
+          } else {
+            console.log("Failed to generate URL");
+          }
         })
         .catch(error => {
           console.error("Error generating voice:", error);
