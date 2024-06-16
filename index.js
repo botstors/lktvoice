@@ -170,8 +170,16 @@ botly.on("postback", async (senderId, message, postback) => {
       console.log(postback);
       var msg = message.message.text.replace("صوت:", "")
 
-      var alloy = TextToVoice(msg, postback)
-        console.log(alloy)
+
+      TextToVoice(msg, postback)
+        .then(url => {
+          console.log("Generated URL:", url);
+          // Use the generated URL as needed
+        })
+        .catch(error => {
+          console.error("Error generating voice:", error);
+        });
+
         // if (alloy) {
         //   console.log(alloy)
         //   botly.sendAttachment({
@@ -204,7 +212,6 @@ botly.on("postback", async (senderId, message, postback) => {
 function TextToVoice(text, nameVoicer) {
   const url = "https://ttsmp3.com/makemp3_ai.php";
 
-  // Form data
   const data = new URLSearchParams({
     "msg": text,
     "lang": nameVoicer,
@@ -212,21 +219,25 @@ function TextToVoice(text, nameVoicer) {
     "source": "ttsmp3"
   });
 
-  // Send POST request
-  axios.post(url, data)
-    .then(response => {
-      try {
-        const responseJson = response.data;
-        console.log("Response JSON:", responseJson["URL"]);
-        return responseJson["URL"];
-      } catch (error) {
-        console.log("Response is not in JSON format");
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
+  return new Promise((resolve, reject) => {
+    axios.post(url, data)
+      .then(response => {
+        try {
+          const responseJson = response.data;
+          console.log("Response JSON:", responseJson["URL"]);
+          resolve(responseJson["URL"]);
+        } catch (error) {
+          console.log("Response is not in JSON format");
+          reject(error);
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        reject(error);
+      });
+  });
 }
+
 
 function keepAppRunning() {
   setInterval(() => {
