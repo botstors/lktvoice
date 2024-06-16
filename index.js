@@ -18,10 +18,10 @@ app.use(express.json({ verify: botly.getVerifySignature(process.env.APP_SECRET) 
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/webhook", botly.router());
-msgDev = `مرحبا بك في بوت LktText \n الذي يقوم بتحويل  المقطع الصوتي الى نص\n قم باعادة توجيه صوت من اي محادثة الى البوت وسيتم تحويل \n اذا واجهت اي مشكلة اتصل بالمطور \n حساب المطور 👇`
+msgDev = `مرحبا بك في بوت LktText \n الذي يقوم بتحويل  المقطع الصوتي الى نص\n قم باعادة توجيه صوت من اي محادثة الى البوت وسيتم تحويل \n اذا واجهت اي مشكلة اتصل بالمطور \n حساب المطور 👇\n https://www.facebook.com/salah.louktaila`
 botly.on("message", async (senderId, message) => {
   console.log(senderId)
-let textmsg
+  let msgVoice 
   if (message.message.text) {
 
 
@@ -44,7 +44,7 @@ let textmsg
     }
 
     else if (message.message.text.startsWith("صوت:")) {
-      textmsg = message.message.text
+      msgVoice = message.message.text.replace("صوت:", "")
       alloy = "alloy"
       echo = "echo"
       fable = "fable"
@@ -165,8 +165,8 @@ botly.on("postback", async (senderId, message, postback) => {
     }
   } else {
     // Quick Reply
-    if (message.message.text =="نور") {
-      botly.sendText({ id: senderId, text: "انتظر نور تقوم بارسل صوت" });
+    if (message.message.text == "نور" || message.message.text == "ايمن" || message.message.text == "مراد" || message.message.text == "اميرة" || message.message.text == "سميرة") {
+      botly.sendText({ id: senderId, text: `انتظر ${message.message.text} تقوم بارسل صوت` });
       console.log(postback);
   
 
@@ -174,7 +174,7 @@ botly.on("postback", async (senderId, message, postback) => {
       TextToVoice(textmsg, postback)
         .then(url => {
           if (url) {
-            console.log(url)
+            console.log(msgVoice)
             botly.sendAttachment({
               id: senderId, 
               type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,  
@@ -186,7 +186,6 @@ botly.on("postback", async (senderId, message, postback) => {
                 console.error('Error sending attachment:', err);
               } else {
                 console.log('Attachment sent successfully:', data);
-                // Optionally handle the response data or log it
               }
             });
 
@@ -217,30 +216,7 @@ botly.on("postback", async (senderId, message, postback) => {
 
 
 function TextToVoice(text, nameVoicer) {
-  const url = "https://ttsmp3.com/makemp3_ai.php";
-
-  // const data = {
-  //   msg: text,
-  //   lang: nameVoicer,
-  //   speed: "1.00",
-  //   source: "ttsmp3"
-  // };
-
-  // axios.post(url, data)
-  //   .then(response => {
-  //     // Assuming the response is JSON, try to parse it
-  //     try {
-  //       const response_json = response.data;
-  //       console.log("Response JSON:", response_json.URL);
-  //       return response_json.URL
-  //     } catch (error) {
-  //       console.error("Error parsing JSON response:", error.message);
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error("Error making POST request:", error.message);
-  //   });
-  
+  const url = "https://ttsmp3.com/makemp3_ai.php";  
   const data = new URLSearchParams({
     "msg": text,
     "lang": nameVoicer,
