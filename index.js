@@ -171,18 +171,19 @@ botly.on("postback", async (senderId, message, postback) => {
       var msg = message.message.text.replace("صوت:", "")
 
       TextToVoice(msg, postback).then(alloy => {
-        if (alloy) {
-          console.log(alloy)
-          botly.sendAttachment({
-            id: senderId,
-            type: Botly.CONST.ATTACHMENT_TYPE.FILE,
-            payload: { url: alloy }
-          }, (err, data) => {
-            //log it
-          });
-        } else {
-          console.log("Failed to generate URL");
-        }
+        console.log(alloy)
+        // if (alloy) {
+        //   console.log(alloy)
+        //   botly.sendAttachment({
+        //     id: senderId,
+        //     type: Botly.CONST.ATTACHMENT_TYPE.FILE,
+        //     payload: { url: alloy }
+        //   }, (err, data) => {
+        //     //log it
+        //   });
+        // } else {
+        //   console.log("Failed to generate URL");
+        //}
       });
      
     /*  var echo = TextToVoice(msg, "Echo");
