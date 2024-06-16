@@ -173,25 +173,24 @@ botly.on("postback", async (senderId, message, postback) => {
 
       TextToVoice(msg, postback)
         .then(url => {
-          console.log("Generated URL:", url);
-          // Use the generated URL as needed
+          if (url) {
+            console.log(url)
+            botly.sendAttachment({
+              id: senderId,
+              type: Botly.CONST.ATTACHMENT_TYPE.FILE,
+              payload: { url: url }
+            }, (err, data) => {
+              //log it
+            });
+          } else {
+            console.log("Failed to generate URL");
+          }
         })
         .catch(error => {
           console.error("Error generating voice:", error);
         });
 
-        // if (alloy) {
-        //   console.log(alloy)
-        //   botly.sendAttachment({
-        //     id: senderId,
-        //     type: Botly.CONST.ATTACHMENT_TYPE.FILE,
-        //     payload: { url: alloy }
-        //   }, (err, data) => {
-        //     //log it
-        //   });
-        // } else {
-        //   console.log("Failed to generate URL");
-        //}
+
       
      
     /*  var echo = TextToVoice(msg, "Echo");
