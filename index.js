@@ -23,8 +23,9 @@ botly.on("message", async (senderId, message) => {
   console.log(senderId)
   let msgVoice 
   if (message.message.text) {
-
-
+    
+    msgVoice = message.message.text.replace("صوت:", "")
+    
     if (message.message.text.startsWith("wiki:")) {
       var msg = message.message.text.replace("wiki:", "")
       try {
@@ -44,7 +45,7 @@ botly.on("message", async (senderId, message) => {
     }
 
     else if (message.message.text.startsWith("صوت:")) {
-      msgVoice = message.message.text.replace("صوت:", "")
+     
       alloy = "alloy"
       echo = "echo"
       fable = "fable"
