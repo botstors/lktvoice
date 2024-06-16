@@ -171,9 +171,10 @@ botly.on("postback", async (senderId, message, postback) => {
       var msg = message.message.text.replace("صوت:", "")
 
       var alloy = TextToVoice(msg, postback);
+      console.log(alloy)
       botly.sendAttachment({
         id: senderId,
-        type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,
+        type: Botly.CONST.ATTACHMENT_TYPE.FILE,
         payload: { url: alloy }
       }, (err, data) => {
         //log it
