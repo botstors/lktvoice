@@ -36,13 +36,12 @@ botly.on("message", async (senderId, message) => {
         if (error.type === 'disambiguation') {
           console.log(`هناك عدة مقالات تحمل هذا الاسم '${searchTerm}': ${error.title}`);
         } else if (error.type === 'not_found') {
-              botly.sendText({ id: senderId, text:"لا توجد مقالة باسم"});
           console.log(`لا توجد مقالة باسم '${searchTerm}'`);
         } else {
-           botly.sendText({ id: senderId, text:"لا توجد مقالة باسم"});
           console.log(`حدث خطأ غير متوقع: ${error.message}`);
         }
       }
+
 
 
     } else {
@@ -149,10 +148,64 @@ botly.on("postback", async (senderId, message, postback) => {
     }
   } else {
     // Quick Reply
+    if (message.message.text.startsWith("صوت:")) {
+      botly.sendText({ id: senderId, text: "اختر صوت احد الشخصيات " });
+      console.log(postback);
+      var msg = message.message.text.replace("صوت:", "");
 
+      var alloy = TextToVoice(msg, "Alloy");
+      var echo = TextToVoice(msg, "Echo");
+      var fable = TextToVoice(msg, "Fable");
+      var nova = TextToVoice(msg, "Nova");
+      var shimmer = TextToVoice(msg, "Shimmer");
+
+      botly.sendText({
+        id: senderId,
+        text: "اختر صوت احد الشخصيات:",
+        quick_replies: [
+          botly.createQuickReply("نور", alloy),
+          botly.createQuickReply("ايمن", echo),
+          botly.createQuickReply("مراد", fable),
+          botly.createQuickReply("اميرة", nova),
+          botly.createQuickReply("سميرة", shimmer),
+        ]
+      });
+    } else if (postback == "up" || postback == "down") {
+      botly.sendText({ id: senderId, text: "شكرا لترك التقييم ♥" });
+    } else if (postback == "followup") {
+      botly.sendText({ id: senderId, text: "جاري العمل عليها..." });
+    }
   }
 });
 /* ---- PING ---- */
+
+
+function TextToVoice(text, nameVoicer) {
+  const url = "https://ttsmp3.com/makemp3_ai.php";
+
+  // Form data
+  const data = new URLSearchParams({
+    "msg": text,
+    "lang": nameVoicer,
+    "speed": "1.00",
+    "source": "ttsmp3"
+  });
+
+  // Send POST request
+  axios.post(url, data)
+    .then(response => {
+      try {
+        const responseJson = response.data;
+        console.log("Response JSON:", responseJson["URL"]);
+        return responseJson["URL"];
+      } catch (error) {
+        console.log("Response is not in JSON format");
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+}
 
 function keepAppRunning() {
   setInterval(() => {
