@@ -148,10 +148,10 @@ botly.on("postback", async (senderId, message, postback) => {
     }
   } else {
     // Quick Reply
-    if (message.message.text.startsWith("صوت:")) {
+    if (message.message.text.startsWith("text:")) {
       botly.sendText({ id: senderId, text: "اختر صوت احد الشخصيات " });
       console.log(postback);
-      var msg = message.message.text.replace("صوت:", "");
+      var msg = message.message.text.replace("text:", "");
 
       var alloy = TextToVoice(msg, "Alloy");
       var echo = TextToVoice(msg, "Echo");
