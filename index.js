@@ -44,7 +44,7 @@ botly.on("message", async (senderId, message) => {
     }
 
     else if (message.message.text.startsWith("صوت:")) {
-      botly.sendText({ id: senderId, text: "اختر صوت احد الشخصيات " });
+     
       alloy = "alloy"
       echo = "echo"
       fable = "fable"
