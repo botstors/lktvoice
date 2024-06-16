@@ -56,7 +56,7 @@ botly.on("message", async (senderId, message) => {
       shimmer = "shimmer"
       botly.sendText({
         id: senderId,
-        text: "اختر صوت احد الشخصيات",
+        text: msgstart,
         quick_replies: [
           botly.createQuickReply("نور", alloy),
           botly.createQuickReply("ايمن", echo),
