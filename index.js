@@ -233,6 +233,7 @@ function TextToVoice(text, nameVoicer) {
       .then(response => {
         try {
           const responseJson = response.data;
+          console.log(responseJson)
           console.log("Response JSON:", responseJson["URL"]);
           resolve(responseJson["URL"]);
         } catch (error) {
