@@ -219,30 +219,51 @@ botly.on("postback", async (senderId, message, postback) => {
 function TextToVoice(text, nameVoicer) {
   const url = "https://ttsmp3.com/makemp3_ai.php";
 
-  const data = new URLSearchParams({
-    "msg": text,
-    "lang": nameVoicer,
-    "speed": "1.00",
-    "source": "ttsmp3"
-  });
+  const data = {
+    msg: text,
+    lang: nameVoicer,
+    speed: "1.00",
+    source: "ttsmp3"
+  };
 
-  return new Promise((resolve, reject) => {
-    axios.post(url, data)
-      .then(response => {
-        try {
-          const responseJson = response.data;
-          console.log("Response JSON:", responseJson["URL"]);
-          resolve(responseJson["URL"]);
-        } catch (error) {
-          console.log("Response is not in JSON format");
-          reject(error);
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        reject(error);
-      });
-  });
+  axios.post(url, data)
+    .then(response => {
+      // Assuming the response is JSON, try to parse it
+      try {
+        const response_json = response.data;
+        console.log("Response JSON:", response_json.URL);
+        return response_json.URL
+      } catch (error) {
+        console.error("Error parsing JSON response:", error.message);
+      }
+    })
+    .catch(error => {
+      console.error("Error making POST request:", error.message);
+    });
+  // const data = new URLSearchParams({
+  //   "msg": text,
+  //   "lang": nameVoicer,
+  //   "speed": "1.00",
+  //   "source": "ttsmp3"
+  // });
+
+  // return new Promise((resolve, reject) => {
+  //   axios.post(url, data)
+  //     .then(response => {
+  //       try {
+  //         const responseJson = response.data;
+  //         console.log("Response JSON:", responseJson["URL"]);
+  //         resolve(responseJson["URL"]);
+  //       } catch (error) {
+  //         console.log("Response is not in JSON format");
+  //         reject(error);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error("Error:", error);
+  //       reject(error);
+  //     });
+  // });
 }
 
 
