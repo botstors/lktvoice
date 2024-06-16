@@ -46,6 +46,7 @@ botly.on("message", async (senderId, message) => {
 
     else if (message.message.text.startsWith("صوت:")) {
       msgVoice = message.message.text.replace("صوت:", "")
+      console.log(msgVoice)
       alloy = "alloy"
       echo = "echo"
       fable = "fable"
@@ -165,7 +166,7 @@ botly.on("postback", async (senderId, message, postback) => {
       //
     }
   } else {
-    var textAudio = msgVoice
+    
     if (message.message.text == "نور" || message.message.text == "ايمن" || message.message.text == "مراد" || message.message.text == "اميرة" || message.message.text == "سميرة") {
       botly.sendText({ id: senderId, text: `انتظر ${message.message.text} تقوم بارسل صوت` });
       console.log(postback);
