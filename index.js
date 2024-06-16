@@ -46,6 +46,7 @@ botly.on("message", async (senderId, message) => {
     }
 
     else if (message.message.text.startsWith("صوت:")) {
+      msgstart = "يمكنك الان ان تسمع الكلمات بصوت وضح \n وجميل ويمكنك اختيار العديد\n من الاصوات رجال ونساء \n اختر اي شخصية لتسمع كماتك بصوتها \n قم بمتابعة المطور 👇\n https://www.facebook.com/salah.louktaila"
       msgVoice = message.message.text.replace("صوت:", "")
       console.log(msgVoice)
       alloy = "alloy"
@@ -55,7 +56,7 @@ botly.on("message", async (senderId, message) => {
       shimmer = "shimmer"
       botly.sendText({
         id: senderId,
-        text: "اختر صوت احد الشخصيات:",
+        text: "اختر صوت احد الشخصيات",
         quick_replies: [
           botly.createQuickReply("نور", alloy),
           botly.createQuickReply("ايمن", echo),
@@ -169,7 +170,7 @@ botly.on("postback", async (senderId, message, postback) => {
   } else {
     
     if (message.message.text == "نور" || message.message.text == "ايمن" || message.message.text == "مراد" || message.message.text == "اميرة" || message.message.text == "سميرة") {
-      botly.sendText({ id: senderId, text: `انتظر ${message.message.text} تقوم بارسل صوت` });
+      botly.sendText({ id: senderId, text: `انتظر ${message.message.text} تقوم بارسل صوتها` });
       console.log(postback);
 
 
