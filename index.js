@@ -166,11 +166,11 @@ botly.on("postback", async (senderId, message, postback) => {
   } else {
     // Quick Reply
     if (message.message.text =="نور") {
-      botly.sendText({ id: senderId, text: "اختر صوت احد الشخصيات " });
+      botly.sendText({ id: senderId, text: "انتظر نور تقوم بارسل صوت" });
       console.log(postback);
-      
+      var msg = message.message.text.replace("صوت:", "")
 
-      var alloy = TextToVoice(msg, "Alloy");
+      var alloy = TextToVoice(msg, postback);
       botly.sendAttachment({
         id: userId,
         type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,
