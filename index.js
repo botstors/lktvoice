@@ -170,7 +170,7 @@ botly.on("postback", async (senderId, message, postback) => {
       console.log(postback);
       var msg = message.message.text.replace("صوت:", "")
 
-      TextToVoice(msg, postback).then(alloy => {
+      var alloy = TextToVoice(msg, postback)
         console.log(alloy)
         // if (alloy) {
         //   console.log(alloy)
@@ -184,7 +184,7 @@ botly.on("postback", async (senderId, message, postback) => {
         // } else {
         //   console.log("Failed to generate URL");
         //}
-      });
+      
      
     /*  var echo = TextToVoice(msg, "Echo");
       var fable = TextToVoice(msg, "Fable");
