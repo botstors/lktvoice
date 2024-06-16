@@ -19,9 +19,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/webhook", botly.router());
 msgDev = `مرحبا بك في بوت LktText \n الذي يقوم بتحويل  المقطع الصوتي الى نص\n قم باعادة توجيه صوت من اي محادثة الى البوت وسيتم تحويل \n اذا واجهت اي مشكلة اتصل بالمطور \n حساب المطور 👇\n https://www.facebook.com/salah.louktaila`
+let msgVoice
 botly.on("message", async (senderId, message) => {
   console.log(senderId)
-  let msgVoice
+  
   if (message.message.text) {
 
 
