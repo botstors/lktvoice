@@ -166,14 +166,14 @@ botly.on("postback", async (senderId, message, postback) => {
       //
     }
   } else {
-    
+    console.log(msgVoice)
     if (message.message.text == "نور" || message.message.text == "ايمن" || message.message.text == "مراد" || message.message.text == "اميرة" || message.message.text == "سميرة") {
       botly.sendText({ id: senderId, text: `انتظر ${message.message.text} تقوم بارسل صوت` });
       console.log(postback);
   
 
 
-      TextToVoice(textAudio, postback)
+      TextToVoice(msgVoice, postback)
         .then(url => {
           if (url) {
             console.log(msgVoice)
