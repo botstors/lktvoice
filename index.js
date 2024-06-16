@@ -24,8 +24,8 @@ botly.on("message", async (senderId, message) => {
   let msgVoice 
   if (message.message.text) {
     
-    msgVoice = message.message.text.replace("صوت:", "")
     
+
     if (message.message.text.startsWith("wiki:")) {
       var msg = message.message.text.replace("wiki:", "")
       try {
@@ -45,7 +45,7 @@ botly.on("message", async (senderId, message) => {
     }
 
     else if (message.message.text.startsWith("صوت:")) {
-     
+      msgVoice = message.message.text.replace("صوت:", "")
       alloy = "alloy"
       echo = "echo"
       fable = "fable"
@@ -165,14 +165,14 @@ botly.on("postback", async (senderId, message, postback) => {
       //
     }
   } else {
-    // Quick Reply
+    var textAudio = msgVoice
     if (message.message.text == "نور" || message.message.text == "ايمن" || message.message.text == "مراد" || message.message.text == "اميرة" || message.message.text == "سميرة") {
       botly.sendText({ id: senderId, text: `انتظر ${message.message.text} تقوم بارسل صوت` });
       console.log(postback);
   
 
 
-      TextToVoice(textmsg, postback)
+      TextToVoice(textAudio, postback)
         .then(url => {
           if (url) {
             console.log(msgVoice)
