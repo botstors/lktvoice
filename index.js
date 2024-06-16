@@ -176,11 +176,11 @@ botly.on("postback", async (senderId, message, postback) => {
           if (url) {
             console.log(url)
             botly.sendAttachment({
-              id: senderId,
-              type: Botly.CONST.ATTACHMENT_TYPE.FILE,
-              payload: { url: url }
-            }, (err, data) => {
-              //log it
+              type: 'audio',
+              payload: {
+                url: url,
+                is_reusable: true 
+              }
             });
           } else {
             console.log("Failed to generate URL");
