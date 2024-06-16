@@ -172,7 +172,7 @@ botly.on("postback", async (senderId, message, postback) => {
 
       var alloy = TextToVoice(msg, postback);
       botly.sendAttachment({
-        id: userId,
+        id: senderId,
         type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,
         payload: { url: alloy }
       }, (err, data) => {
