@@ -21,10 +21,10 @@ app.use("/webhook", botly.router());
 msgDev = `مرحبا بك في بوت LktText \n الذي يقوم بتحويل  المقطع الصوتي الى نص\n قم باعادة توجيه صوت من اي محادثة الى البوت وسيتم تحويل \n اذا واجهت اي مشكلة اتصل بالمطور \n حساب المطور 👇\n https://www.facebook.com/salah.louktaila`
 botly.on("message", async (senderId, message) => {
   console.log(senderId)
-  let msgVoice 
+  let msgVoice
   if (message.message.text) {
-    
-    
+
+
 
     if (message.message.text.startsWith("wiki:")) {
       var msg = message.message.text.replace("wiki:", "")
@@ -141,7 +141,7 @@ botly.on("message", async (senderId, message) => {
     botly.sendText({ id: senderId, text: "فيديو" });
   }
 });
-
+console.log(`text :${msgVoice}`)
 botly.on("postback", async (senderId, message, postback) => {
   if (message.postback) {
     if (postback == "") {
@@ -166,11 +166,11 @@ botly.on("postback", async (senderId, message, postback) => {
       //
     }
   } else {
-    console.log(msgVoice)
+    
     if (message.message.text == "نور" || message.message.text == "ايمن" || message.message.text == "مراد" || message.message.text == "اميرة" || message.message.text == "سميرة") {
       botly.sendText({ id: senderId, text: `انتظر ${message.message.text} تقوم بارسل صوت` });
       console.log(postback);
-  
+
 
 
       TextToVoice(msgVoice, postback)
@@ -178,10 +178,10 @@ botly.on("postback", async (senderId, message, postback) => {
           if (url) {
             console.log(msgVoice)
             botly.sendAttachment({
-              id: senderId, 
-              type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,  
+              id: senderId,
+              type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,
               payload: {
-                url: url 
+                url: url
               }
             }, (err, data) => {
               if (err) {
@@ -200,12 +200,12 @@ botly.on("postback", async (senderId, message, postback) => {
         });
 
 
-      
-     
-    /*  var echo = TextToVoice(msg, "Echo");
-      var fable = TextToVoice(msg, "Fable");
-      var nova = TextToVoice(msg, "Nova");
-      var shimmer = TextToVoice(msg, "Shimmer");*/
+
+
+      /*  var echo = TextToVoice(msg, "Echo");
+        var fable = TextToVoice(msg, "Fable");
+        var nova = TextToVoice(msg, "Nova");
+        var shimmer = TextToVoice(msg, "Shimmer");*/
 
     } else if (postback == "up" || postback == "down") {
       botly.sendText({ id: senderId, text: "شكرا لترك التقييم ♥" });
@@ -218,7 +218,7 @@ botly.on("postback", async (senderId, message, postback) => {
 
 
 function TextToVoice(text, nameVoicer) {
-  const url = "https://ttsmp3.com/makemp3_ai.php";  
+  const url = "https://ttsmp3.com/makemp3_ai.php";
   const data = new URLSearchParams({
     "msg": text,
     "lang": nameVoicer,
