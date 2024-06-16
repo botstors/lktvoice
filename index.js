@@ -41,9 +41,30 @@ botly.on("message", async (senderId, message) => {
           console.log(`حدث خطأ غير متوقع: ${error.message}`);
         }
       }
+    }
 
+      else if (message.message.text.startsWith("صوت:")) {
+        botly.sendText({ id: senderId, text: "اختر صوت احد الشخصيات " });
+        console.log(postback);
+        var msg = message.message.text.replace("صوت:", "");
 
+        var alloy = TextToVoice(msg, "Alloy");
+        var echo = TextToVoice(msg, "Echo");
+        var fable = TextToVoice(msg, "Fable");
+        var nova = TextToVoice(msg, "Nova");
+        var shimmer = TextToVoice(msg, "Shimmer");
 
+        botly.sendText({
+          id: senderId,
+          text: "اختر صوت احد الشخصيات:",
+          quick_replies: [
+            botly.createQuickReply("نور", alloy),
+            botly.createQuickReply("ايمن", echo),
+            botly.createQuickReply("مراد", fable),
+            botly.createQuickReply("اميرة", nova),
+            botly.createQuickReply("سميرة", shimmer),
+          ]
+        });
     } else {
       botly.sendButtons({
         id: senderId,
@@ -148,10 +169,10 @@ botly.on("postback", async (senderId, message, postback) => {
     }
   } else {
     // Quick Reply
-    if (message.message.text.startsWith("text:")) {
+    if (message.message.text.startsWith("صوت:")) {
       botly.sendText({ id: senderId, text: "اختر صوت احد الشخصيات " });
       console.log(postback);
-      var msg = message.message.text.replace("text:", "");
+      var msg = message.message.text.replace("صوت:", "");
 
       var alloy = TextToVoice(msg, "Alloy");
       var echo = TextToVoice(msg, "Echo");
